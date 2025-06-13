@@ -1,0 +1,70 @@
+{
+  "name": "web-share-tester",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Interactive dev tool for testing Web Share API implementations with realistic platform mockups and live interception capabilities",
+  "keywords": [
+    "web-share",
+    "api",
+    "tester",
+    "preact",
+    "frontend",
+    "dev-tool",
+    "testing",
+    "development",
+    "share",
+    "platform-mockups"
+  ],
+  "author": "popidge",
+  "license": "MIT",
+  "homepage": "https://github.com/popidge/web-share-tester#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/popidge/web-share-tester.git"
+  },
+  "bugs": {
+    "url": "https://github.com/popidge/web-share-tester/issues"
+  },
+  "main": "dist/index.html",
+  "files": [
+    "dist/",
+    "server/",
+    "plugins/",
+    "test/",
+    "bin/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "bin": {
+    "web-share-tester": "bin/web-share-tester.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
+    "typecheck": "tsc --noEmit",
+    "server": "node server/index.js",
+    "start": "npm run build && npm run server",
+    "dev:server": "npm run build && npm run server",
+    "test:integration": "npm run build && concurrently \"npm run server\" \"npm run dev\"",
+    "prepublishOnly": "npm run build",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "devices.css": "^0.2.0",
+    "express": "^4.21.2",
+    "preact": "^10.26.5",
+    "ws": "^8.18.2"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.1",
+    "concurrently": "^9.1.2",
+    "vite": "^6.3.5"
+  }
+}

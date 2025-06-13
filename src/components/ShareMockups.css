@@ -1,0 +1,579 @@
+/* iOS Share Dialog */
+.ios-share-dialog {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px 20px 0 0;
+  padding: 20px;
+  max-height: 70%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.ios-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.ios-close {
+  font-size: 18px;
+  color: #007AFF;
+  font-weight: 600;
+}
+
+.ios-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+}
+
+.ios-spacer {
+  width: 20px;
+}
+
+.ios-link-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.ios-link-icon {
+  font-size: 24px;
+}
+
+.ios-link-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 4px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.ios-link-url {
+  font-size: 12px;
+  color: #666;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.ios-share-text {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+  margin-bottom: 15px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.ios-app-row {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 800px) {
+  .ios-app-row {
+    gap: 5px;
+  }
+}
+
+.ios-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ios-app:hover {
+  background: rgba(0, 0, 0, 0.05);
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.ios-app-icon {
+  font-size: 32px;
+  width: 60px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ios-app-name {
+  font-size: 12px;
+  color: #000;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Android Share Dialog */
+.android-share-dialog {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 24px 24px 0 0;
+  padding: 0;
+  max-height: 75%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.android-header {
+  text-align: center;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #e8eaed;
+  position: relative;
+}
+
+.android-header::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 4px;
+  background: #dadce0;
+  border-radius: 2px;
+}
+
+.android-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #202124;
+  margin-top: 8px;
+}
+
+.android-content {
+  padding: 24px;
+}
+
+.android-link-preview {
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #e8eaed;
+}
+
+.android-link-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #202124;
+  margin-bottom: 4px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.android-link-url {
+  font-size: 14px;
+  color: #5f6368;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.android-share-text {
+  font-size: 14px;
+  color: #3c4043;
+  line-height: 1.5;
+  margin-bottom: 24px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.android-apps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1000px) {
+  .android-apps {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 800px) {
+  .android-apps {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .android-apps {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+}
+
+@media (max-width: 400px) {
+  .android-apps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+}
+
+.android-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 8px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.android-app:hover {
+  background: #f1f3f4;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.android-app-icon {
+  font-size: 32px;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #4285f4, #34a853);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.android-app-name {
+  font-size: 13px;
+  color: #202124;
+  text-align: center;
+  font-weight: 400;
+}
+
+/* macOS Share Dialog */
+.macos-share-dialog {
+  width: 100%;
+  height: 100%;
+  background: #f6f6f6;
+  border-radius: 8px;
+  overflow: hidden;
+  box-sizing: border-box;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.macos-titlebar {
+  display: flex;
+  align-items: center;
+  background: #e5e5e5;
+  padding: 12px 16px;
+  border-bottom: 1px solid #d0d0d0;
+}
+
+.macos-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.macos-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.macos-button.close {
+  background: #ff5f56;
+}
+
+.macos-button.minimize {
+  background: #ffbd2e;
+}
+
+.macos-button.maximize {
+  background: #27ca3f;
+}
+
+.macos-title {
+  flex: 1;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.macos-content {
+  padding: 24px;
+}
+
+.macos-link-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+}
+
+.macos-link-icon {
+  font-size: 24px;
+}
+
+.macos-link-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.macos-link-url {
+  font-size: 12px;
+  color: #666;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.macos-share-text {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.macos-apps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1000px) {
+  .macos-apps {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 800px) {
+  .macos-apps {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .macos-apps {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+}
+
+@media (max-width: 400px) {
+  .macos-apps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+}
+
+.macos-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.macos-app:hover {
+  background: #e5e5e5;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.macos-app-icon {
+  font-size: 32px;
+  width: 56px;
+  height: 56px;
+  background: #ddd;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.macos-app-name {
+  font-size: 12px;
+  color: #333;
+  text-align: center;
+}
+
+/* Windows Share Dialog */
+.windows-share-dialog {
+  width: 100%;
+  height: 100%;
+  background: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+  box-sizing: border-box;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.windows-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.windows-title {
+  font-size: 16px;
+  font-weight: 400;
+  color: #333;
+}
+
+.windows-close {
+  font-size: 16px;
+  color: #666;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.windows-close:hover {
+  background: #e81123;
+  color: white;
+}
+
+.windows-content {
+  padding: 24px;
+}
+
+.windows-link-preview {
+  padding: 16px;
+  background: #fff;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+}
+
+.windows-link-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.windows-link-url {
+  font-size: 12px;
+  color: #666;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.windows-share-text {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.windows-apps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1000px) {
+  .windows-apps {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 800px) {
+  .windows-apps {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .windows-apps {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+}
+
+@media (max-width: 400px) {
+  .windows-apps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+}
+
+.windows-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.windows-app:hover {
+  background: #e5e5e5;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.windows-app-icon {
+  font-size: 32px;
+  width: 56px;
+  height: 56px;
+  background: #ddd;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.windows-app-name {
+  font-size: 12px;
+  color: #333;
+  text-align: center;
+}

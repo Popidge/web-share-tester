@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Share API Test App</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+        .primary {
+            background: #007bff;
+            color: white;
+        }
+        .primary:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+        }
+        .secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .secondary:hover {
+            background: #545b62;
+            transform: translateY(-1px);
+        }
+        .test {
+            background: #28a745;
+            color: white;
+        }
+        .test:hover {
+            background: #1e7e34;
+            transform: translateY(-1px);
+        }
+        .status {
+            margin-top: 2rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #e8f4fd;
+            border: 1px solid #b8daff;
+            color: #004085;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔗 Web Share API Test App</h1>
+        
+        <div class="info">
+            <strong>Instructions:</strong> 
+            <br>1. Start the Web Share Tester server: <code>npm run server</code>
+            <br>2. Open the tester interface: <a href="http://localhost:3001" target="_blank">http://localhost:3001</a>
+            <br>3. Test sharing from this page to see it intercepted in the tester!
+            <br><br><strong>Note:</strong> By default, shares are only sent to the tester (no OS dialog). Use "Toggle Original Share" to enable both.
+        </div>
+        
+        <div class="description">
+            This is a test application to verify that the Web Share API interceptor is working correctly. 
+            Fill in the form below and click "Share" to test the integration.
+        </div>
+
+        <form id="shareForm">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input 
+                    type="text" 
+                    id="title" 
+                    value="Amazing Web Development Article"
+                    placeholder="Enter share title"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="text">Text</label>
+                <textarea 
+                    id="text" 
+                    rows="4" 
+                    placeholder="Enter share description"
+                >I just found this incredible article about modern web development techniques. It covers everything from performance optimization to accessibility best practices. Definitely worth a read!</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="url">URL</label>
+                <input 
+                    type="url" 
+                    id="url" 
+                    value="https://example.com/amazing-web-dev-article"
+                    placeholder="https://example.com"
+                >
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="primary" onclick="shareContent()">
+                    📤 Share with Web Share API
+                </button>
+                <button type="button" class="test" onclick="testShare()">
+                    🧪 Test Default Share
+                </button>
+                <button type="button" class="secondary" onclick="toggleOriginalShare()">
+                    <span id="toggleText">🔀 Enable Original Share</span>
+                </button>
+                <button type="button" class="secondary" onclick="showConfig()">
+                    ⚙️ Show Config
+                </button>
+                <button type="button" class="secondary" onclick="clearStatus()">
+                    🗑️ Clear Status
+                </button>
+            </div>
+        </form>
+
+        <div id="status"></div>
+    </div>
+
+    <!-- Load the Web Share Tester shim -->
+    <script src="http://localhost:3001/web-share-tester-shim.js"></script>
+    
+    <script>
+        function getFormData() {
+            return {
+                title: document.getElementById('title').value.trim(),
+                text: document.getElementById('text').value.trim(),
+                url: document.getElementById('url').value.trim()
+            }
+        }
+
+        function showStatus(message, type = 'success') {
+            const statusEl = document.getElementById('status')
+            statusEl.className = `status ${type}`
+            statusEl.textContent = message
+        }
+
+        async function shareContent() {
+            const data = getFormData()
+            
+            // Validate required fields
+            if (!data.title && !data.text && !data.url) {
+                showStatus('Please fill in at least one field (title, text, or url)', 'error')
+                return
+            }
+
+            try {
+                showStatus('Sharing content...', 'success')
+                console.log('🚀 Calling navigator.share() with:', data)
+                
+                await navigator.share(data)
+                
+                showStatus('✅ Content shared successfully! Check the Web Share Tester interface.', 'success')
+                console.log('✅ Share completed successfully')
+            } catch (error) {
+                console.error('❌ Share failed:', error)
+                
+                if (error.name === 'AbortError') {
+                    showStatus('Share was cancelled by user', 'error')
+                } else if (error.name === 'NotAllowedError') {
+                    showStatus('Share not allowed (user gesture required)', 'error')
+                } else {
+                    showStatus(`Share failed: ${error.message}`, 'error')
+                }
+            }
+        }
+
+        async function testShare() {
+            try {
+                console.log('🧪 Testing with window.testWebShare()')
+                await window.testWebShare()
+                showStatus('✅ Test share completed! Check the Web Share Tester interface.', 'success')
+            } catch (error) {
+                console.error('❌ Test share failed:', error)
+                showStatus(`Test share failed: ${error.message}`, 'error')
+            }
+        }
+
+        function toggleOriginalShare() {
+            if (window.webShareTester) {
+                const currentConfig = window.webShareTester.getConfig()
+                const newValue = !currentConfig.enableOriginalShare
+                window.webShareTester.enableOriginalShare(newValue)
+                
+                const toggleButton = document.getElementById('toggleText')
+                toggleButton.textContent = newValue ? '🔀 Disable Original Share' : '🔀 Enable Original Share'
+                
+                showStatus(`Original share ${newValue ? 'enabled' : 'disabled'}. Shares will ${newValue ? 'trigger both tester AND OS dialog' : 'only go to tester'}.`, 'success')
+            } else {
+                showStatus('Web Share Tester not available yet. Try again in a moment.', 'error')
+            }
+        }
+
+        function showConfig() {
+            if (window.webShareTester) {
+                const config = window.webShareTester.getConfig()
+                showStatus(`Config: Original Share=${config.enableOriginalShare}, Debug=${config.debug}, Server Port=${config.serverPort}`, 'success')
+                console.log('📋 Current Web Share Tester Config:', config)
+            } else {
+                showStatus('Web Share Tester not available yet. Try again in a moment.', 'error')
+            }
+        }
+
+        function clearStatus() {
+            document.getElementById('status').textContent = ''
+            document.getElementById('status').className = ''
+        }
+
+        // Check if Web Share API is available
+        document.addEventListener('DOMContentLoaded', () => {
+            if ('share' in navigator) {
+                console.log('✅ Web Share API is available')
+                showStatus('Web Share API is available and ready for testing!', 'success')
+            } else {
+                console.log('⚠️ Web Share API not supported - using polyfill')
+                showStatus('Web Share API not natively supported - using polyfill from Web Share Tester', 'success')
+            }
+
+            // Update toggle button text based on initial config
+            setTimeout(() => {
+                if (window.webShareTester) {
+                    const config = window.webShareTester.getConfig()
+                    const toggleButton = document.getElementById('toggleText')
+                    toggleButton.textContent = config.enableOriginalShare ? '🔀 Disable Original Share' : '🔀 Enable Original Share'
+                }
+            }, 100)
+        })
+    </script>
+</body>
+</html>
