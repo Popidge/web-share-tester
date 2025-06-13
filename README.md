@@ -6,8 +6,6 @@
 
 An interactive dev tool for testing Web Share API implementations with realistic platform mockups and live interception capabilities.
 
-![Web Share API Tester Demo](https://via.placeholder.com/800x400/667eea/white?text=Demo+Screenshot+Here)
-
 ## ✨ Features
 
 ### 🎯 Manual Testing Mode
